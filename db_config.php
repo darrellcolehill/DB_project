@@ -1,47 +1,32 @@
 <?php
-
-  // NOTE: may need to change
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "db_project";
-
-  // Create connection
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  // Check connection
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
-  else
-  {
-    echo "Connected to DB";
-  }
-
-  //include_once('db_connection.php');
+  include_once('db_connection.php');
 
   // sql to create users table
-  $sql = "CREATE TABLE users (
-    username TEXT PRIMARY KEY,
-    lastname TEXT,
-    email TEXT
+  $sql = "CREATE TABLE IF NOT EXISTS users (
+    username VARCHAR(30),
+    password VARCHAR(30),
+    lastname VARCHAR(30),
+    email VARCHAR(30),
+    admin BOOLEAN,
+    PRIMARY KEY (username)
     )";
 
     //echo $sql;
 
     
-  if ($conn->("CREATE TABLE users username TEXT PRIMARY KEY") == TRUE) {
+  if ($conn->query($sql) === TRUE) {
     echo "Table users created successfully";
   } else {
-    echo "Error creating table: ";
+    echo $conn->error;
   }
 
 
-  /*
+  
 
   // sql to create request table
-  $sql = "CREATE TABLE request (
-    username TEXT NOT NULL,
-    semester TEXT NOT NULL,
+  $sql = "CREATE TABLE IF NOT EXISTS request (
+    username VARCHAR(30),
+    semester VARCHAR(30),
     PRIMARY KEY (username, semester)
   )";
     
@@ -53,15 +38,15 @@
 
 
   // sql to create books table
-  $sql = "CREATE TABLE books (
-    username TEXT NOT NULL,
-    semester TEXT NOT NULL,
-    ISBN TEXT NOT NULL,
-    title TEXT,
-    authors TEXT,
-    edition TEXT,
-    publisher TEXT,
-    PRIMARY KEY (username, semester)
+  $sql = "CREATE TABLE IF NOT EXISTS books (
+    username VARCHAR(30),
+    semester VARCHAR(30),
+    ISBN VARCHAR(30),
+    title VARCHAR(30),
+    authors VARCHAR(30),
+    edition VARCHAR(30),
+    publisher VARCHAR(30),
+    PRIMARY KEY (username, semester, ISBN)
   )";
     
   if ($conn->query($sql) === TRUE) {
@@ -69,7 +54,7 @@
   } else {
     echo "Error creating table: " . $conn->error;
   }
-  */
+  
 
 
 ?>

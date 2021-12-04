@@ -1,7 +1,20 @@
 <?php
 
-    // NOTE: might have to change if you have different root user information
-    mysql_connect('localhost', 'root', '');
-    mysql_select_db('db_project');
+      // NOTE: may need to change
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "db_project";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+  else
+  {
+    echo "Connected to DB";
+  }
 
 ?>
