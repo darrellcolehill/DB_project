@@ -41,11 +41,13 @@
     username VARCHAR(30),
     semester VARCHAR(30),
     ISBN VARCHAR(30),
+    class VARCHAR(30),
     title VARCHAR(30),
     authors VARCHAR(30),
     edition VARCHAR(30),
     publisher VARCHAR(30),
-    PRIMARY KEY (username, semester, ISBN),
+    count INT,
+    PRIMARY KEY (username, semester, ISBN, Class),
     FOREIGN KEY (username, semester) REFERENCES request(username, semester)
   )";
     
