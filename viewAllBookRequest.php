@@ -69,18 +69,12 @@
 ?>
 
 
-
-
-
-
-
 <!DOCTYPE html>
 
 <html>
     <body>
 
         <?php
-
             $username = "b"; // TODO: change this to the user name stored in the cookie created during login
 
             $query = "SELECT semester FROM request WHERE username = '{$username}'";

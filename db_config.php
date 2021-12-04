@@ -21,8 +21,6 @@
   }
 
 
-  
-
   // sql to create request table
   $sql = "CREATE TABLE IF NOT EXISTS request (
     username VARCHAR(30),
@@ -30,6 +28,7 @@
     PRIMARY KEY (username, semester)
   )";
     
+
   if ($conn->query($sql) === TRUE) {
     echo "Table users created successfully";
   } else {
@@ -49,6 +48,7 @@
     PRIMARY KEY (username, semester, ISBN),
     FOREIGN KEY (username, semester) REFERENCES request(username, semester)
   )";
+    
     
   if ($conn->query($sql) === TRUE) {
     echo "Table users created successfully";
