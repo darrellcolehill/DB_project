@@ -46,7 +46,8 @@
     authors VARCHAR(30),
     edition VARCHAR(30),
     publisher VARCHAR(30),
-    PRIMARY KEY (username, semester, ISBN)
+    PRIMARY KEY (username, semester, ISBN),
+    FOREIGN KEY (username, semester) REFERENCES request(username, semester)
   )";
     
   if ($conn->query($sql) === TRUE) {
@@ -54,7 +55,7 @@
   } else {
     echo "Error creating table: " . $conn->error;
   }
-  
+ 
 
 
 ?>
