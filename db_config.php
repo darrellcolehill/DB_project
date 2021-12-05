@@ -48,7 +48,7 @@
     publisher VARCHAR(30),
     count INT,
     PRIMARY KEY (username, semester, ISBN, Class),
-    FOREIGN KEY (username, semester) REFERENCES request(username, semester)
+    FOREIGN KEY (username, semester) REFERENCES request(username, semester) ON DELETE CASCADE
   )";
     
     

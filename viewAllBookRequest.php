@@ -2,6 +2,37 @@
     include_once('db_connection.php');
 
 
+    if(isset($_GET['add'])) {
+
+        $username = 'b'; // TODO: change to get this from cookie
+        $semester = $_GET['semester'];
+
+        $query = "INSERT INTO request (username, semester) 
+        VALUES ('{$username}', '{$semester}')";
+
+        if ($result = $conn->query($query)) {
+            header("Location: http://localhost/DB_project/viewAllBookRequest.php"); 
+        } 
+        else{
+            echo "ERROR: Could not able to execute $query. ";
+        }
+    }
+
+    if(isset($_GET['delete'])) {
+
+        $username = 'b'; // TODO: change to get this from cookie
+        $semester = $_GET['semester'];
+
+        $query = "DELETE FROM request WHERE username = '{$username}' AND semester = '{$semester}'";
+        if ($result = $conn->query($query)) {
+            header("Location: http://localhost/DB_project/viewAllBookRequest.php"); 
+        } 
+        else{
+            echo "ERROR: Could not able to execute $query. ";
+        }
+    }
+
+
     // Attempt insert query execution
     // CODE TO INSERT INTO THE users TABLE
     /*
@@ -72,10 +103,42 @@
 <!DOCTYPE html>
 
 <html>
-    <body>
 
+    <head>
+        <style>
+
+            table, th, td {
+                border:1px solid black;
+            }
+            input{
+                width: 90%;
+            }
+            #viewBnt
+            {
+                float: left;
+            }
+            #deleteBnt
+            {
+                float: right;
+            }
+
+            .center 
+            {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        
+    <table  class="center">
+        <tr>
+            <th>Semester</th>
+            <th>Options</th>
+        </tr>
         <?php
-            $username = "a"; // TODO: change this to the user name stored in the cookie created during login
+            $username = "b"; // TODO: change this to the user name stored in the cookie created during login
 
             $query = "SELECT semester FROM request WHERE username = '{$username}'";
             
@@ -83,29 +146,30 @@
             
                 while ($row = $result->fetch_assoc()) {
                     $semester = $row["semester"];
-                    echo '<b>'.$row["semester"]."</b> </br></br>";
-                    echo "<p><a href='http://localhost/DB_project/viewEditBookRequest.php?semester=$semester'>View/Edit</a></p>"
+        ?>
+
+                    <tr>
+                        <th style="width:175px"><?php echo $semester?></th>
+                        <th style="width:125px"><?php echo "<button id='viewBnt'><a href='http://localhost/DB_project/viewEditBookRequest.php?semester=$semester'>VIEW</a></button>
+                        <button id='deleteBnt'><a href='http://localhost/DB_project/viewAllBookRequest.php?delete=DELETE&semester=$semester'>DELETE</a></button>"?></th>
+                    </tr>
+                <?php
+                    //echo "<a href='http://localhost/DB_project/viewEditBookRequest.php?semester=$semester'>$semester</a>"
                 ?>
                     <?php
-
-                    $semester = $row["semester"];
-                    echo '</br></br>';
-
                 }
             
             /*freeresultset*/
             $result->free();
             }
+                    ?>
+
+        <form method='GET'>
+        <tr>
+            <th><input type="text" name="semester" value="INPUT SEMESTER HERE"></th>
+            <th><input type='submit' name='add' value='ADD'></th>
+        </tr> 
 
 
-        ?>
     </body>
 </html>
-
-
-
-
-
-
-
-
