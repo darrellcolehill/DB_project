@@ -75,7 +75,7 @@
     <body>
 
         <?php
-            $username = "b"; // TODO: change this to the user name stored in the cookie created during login
+            $username = "a"; // TODO: change this to the user name stored in the cookie created during login
 
             $query = "SELECT semester FROM request WHERE username = '{$username}'";
             
