@@ -10,11 +10,12 @@
         $query = "INSERT INTO request (username, semester) 
         VALUES ('{$username}', '{$semester}')";
 
+
         if ($result = $conn->query($query)) {
             header("Location: http://localhost/DB_project/viewAllBookRequest.php"); 
         } 
         else{
-            echo "ERROR: Could not able to execute $query. ";
+            echo "Request form already exist";
         }
     }
 
@@ -132,7 +133,7 @@
 
     <body>
         
-    <table  class="center">
+    <table  class="center" style="width:375px">
         <tr>
             <th>Semester</th>
             <th>Options</th>
@@ -149,13 +150,11 @@
         ?>
 
                     <tr>
-                        <th style="width:175px"><?php echo $semester?></th>
+                        <th style="width:250px"><?php echo $semester?></th>
                         <th style="width:125px"><?php echo "<button id='viewBnt'><a href='http://localhost/DB_project/viewEditBookRequest.php?semester=$semester'>VIEW</a></button>
                         <button id='deleteBnt'><a href='http://localhost/DB_project/viewAllBookRequest.php?delete=DELETE&semester=$semester'>DELETE</a></button>"?></th>
                     </tr>
-                <?php
-                    //echo "<a href='http://localhost/DB_project/viewEditBookRequest.php?semester=$semester'>$semester</a>"
-                ?>
+
                     <?php
                 }
             

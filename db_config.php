@@ -30,7 +30,7 @@
     
 
   if ($conn->query($sql) === TRUE) {
-    echo "Table users created successfully";
+    echo "Table request created successfully";
   } else {
     echo "Error creating table: " . $conn->error;
   }
@@ -53,11 +53,24 @@
     
     
   if ($conn->query($sql) === TRUE) {
-    echo "Table users created successfully";
+    echo "Table books created successfully";
   } else {
     echo "Error creating table: " . $conn->error;
   }
  
 
+  // sql to create books table
+  $sql = "CREATE TABLE IF NOT EXISTS emaildates (
+    semester VARCHAR(30),
+    sendEmailDate DATE,
+    bookRequestDate DATE
+  )";
+    
+    
+  if ($conn->query($sql) === TRUE) {
+    echo "Table emaildates created successfully";
+  } else {
+    echo "Error creating table: " . $conn->error;
+  }
 
 ?>
