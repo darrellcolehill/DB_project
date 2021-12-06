@@ -24,8 +24,8 @@ if(isset($_GET['submit']))
         $subject = 'Book list request';
         $message = 'Hi, we need your book requests!';
         $message = 'Must be submitted by: ' . $date;
-        $headers = 'From: staff@ucf.edu' . "\r\n" .
-        'Reply-To: noreply@ucf.edu' . "\r\n" .
+        $headers = 'From: dbprojectfall21@gmail.com' . "\r\n" .
+        'Reply-To: dbprojectfall21@gmail.com' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
 
         mail($to, $subject, $message, $headers);
@@ -33,6 +33,8 @@ if(isset($_GET['submit']))
         // create a column that contains a semester flag then if loop 
         // will update the flag to determine date
     }
+
+    echo "Messages sent with a deadline of '{$date}'";
 }
 
 ?>

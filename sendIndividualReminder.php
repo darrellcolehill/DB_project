@@ -7,16 +7,18 @@
 include('config.php');
 
     if (isset($_GET['email'])) {  
+
+
+
         $to = $_GET["email"];
-        $subject = 'Book information request'
-        $message = 'Hello, please submit your book request.'
-        $headers = 'From: email@email.com'."\r\n".
-        'Reply-to: noreply@mail.com'."\r\n".
-        'X-Mailer:PHP/'.phpversion();
+        $subject = 'Book list request';
+        $message = 'Hi, please submit your book request';
+        $header = "From: dbprojectfall21@gmail.com\r\nReply-To: dbprojectfall21@gmail.com";
+        $mail_sent = mail($to, $subject, $message, $header);
 
         mail($to, $subject, $message, $headers);
 
         // TODO: redirect back to the page that shows the admin all the other users
     }
-}
+
 ?> 
