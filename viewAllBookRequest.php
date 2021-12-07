@@ -106,6 +106,7 @@
             <th><input type='submit' name='add' value='ADD'></th>
         </tr> 
 
+        <a href="http://localhost/DB_project/passwordReset.php">Reset Password</a>
 
     </body>
 </html>

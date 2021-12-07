@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
         if($stmt = $conn->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("si", $param_password, $param_email);
+            $stmt->bind_param("ss", $param_password, $param_email);
             
             // Set parameters
             $param_password = $new_password;
