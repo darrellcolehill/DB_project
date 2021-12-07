@@ -85,7 +85,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             }
                             else
                             {
-                                header("location: http://localhost/DB_project/viewEditBookRequest.php");
+                                header("location: http://localhost/DB_project/viewAllBookRequest.php");
                             }
 
                             
