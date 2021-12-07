@@ -21,4 +21,5 @@ include_once('db_connection.php');
         // TODO: redirect back to the page that shows the admin all the other users
     }
 
+    echo 'Email was sent successfully!'
 ?> 
