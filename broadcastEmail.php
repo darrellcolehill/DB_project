@@ -23,8 +23,8 @@ include_once('db_connection.php');
 
             $to = $email;
             $subject = 'Book list request';
-            $message = 'Hi, we need your book requests!';
-            $header = "From: dbprojectfall21@gmail.com\r\nReply-To: dbprojectfall21@gmail.com";
+            $message = 'Hi, we need your book requests by '.$date;
+            $header = "From: elilovera06@gmail.com\r\nReply-To: elilovera06@gmail.com";
             $mail_sent = mail($to, $subject, $message, $header);
             
         }
