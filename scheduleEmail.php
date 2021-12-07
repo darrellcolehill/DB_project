@@ -15,15 +15,13 @@ if(isset($_GET['submit'])){
 
     if($result = $conn->query($sql))
     {
-        echo "Successfully created scheduled email";
+        echo "Successfully created scheduled scheduled email";
     }
     else
     {
         echo "Error creating table: " . $conn->error;
     }
 
-
-    echo 'Date has been submitted';
 }
 
 ?>

@@ -21,7 +21,7 @@
 
         <table style="width:100%">
             <tr>
-                <th>professor</th>
+                <th>professor's email</th>
                 <th>class</th>
                 <th>title</th>
                 <th>authors</th>
@@ -32,9 +32,7 @@
             </tr>
 
         <?php
-            $username = "b"; // TODO: change this to the user name stored in the cookie created during login
-            // TODO: add user authenticaion here. Maybe just check if the token containing the username also contains a role value equal to "admin"
-
+            
             $semester = $_GET['semester'];
 
             echo "<h1>Final Book Request Form for $semester</h1>";
@@ -46,7 +44,7 @@
             
                 while ($row = $result->fetch_assoc()) {
 
-                    $username = $row['username'];
+                    $email = $row['email'];
                     $ISBN = $row['ISBN'];
                     $title = $row['title'];
                     $count = $row['count'];
@@ -58,7 +56,7 @@
                 ?>
 
                     <tr>
-                        <td><?php echo $username?></td>
+                        <td><?php echo $email?></td>
                         <td><?php echo $class?></td>
                         <td><?php echo $title?></td>
                         <td><?php echo $authors?></td>

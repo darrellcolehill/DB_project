@@ -3,12 +3,11 @@
 
   // sql to create users table
   $sql = "CREATE TABLE IF NOT EXISTS users (
-    username VARCHAR(30),
     password VARCHAR(30),
     lastname VARCHAR(30),
     email VARCHAR(30),
     admin BOOLEAN,
-    PRIMARY KEY (username)
+    PRIMARY KEY (email)
     )";
 
     //echo $sql;
@@ -23,9 +22,9 @@
 
   // sql to create request table
   $sql = "CREATE TABLE IF NOT EXISTS request (
-    username VARCHAR(30),
+    email VARCHAR(30),
     semester VARCHAR(30),
-    PRIMARY KEY (username, semester)
+    PRIMARY KEY (email, semester)
   )";
     
 
@@ -38,7 +37,7 @@
 
   // sql to create books table
   $sql = "CREATE TABLE IF NOT EXISTS books (
-    username VARCHAR(30),
+    email VARCHAR(30),
     semester VARCHAR(30),
     ISBN VARCHAR(30),
     class VARCHAR(30),
@@ -47,8 +46,8 @@
     edition VARCHAR(30),
     publisher VARCHAR(30),
     count INT,
-    PRIMARY KEY (username, semester, ISBN, Class),
-    FOREIGN KEY (username, semester) REFERENCES request(username, semester) ON DELETE CASCADE
+    PRIMARY KEY (email, semester, ISBN, Class),
+    FOREIGN KEY (email, semester) REFERENCES request(email, semester) ON DELETE CASCADE
   )";
     
     

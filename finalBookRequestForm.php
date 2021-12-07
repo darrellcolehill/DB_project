@@ -2,6 +2,21 @@
 
     include_once('db_connection.php');
 
+    $month = date('m');
+    $year = date('y');
+
+    if($month >= 1 && $month <= 5){ // current is spring, so get summer
+        $semester = "SUMMER{$year}";
+    } 
+    else if($month >= 6 && $month <= 8) // current is summer, so get fall
+    {
+        $semester = "FALL{$year}";
+    }
+    else // current if fall, so get spring
+    {
+        $year = $year + 1;
+        $semester = "SPRING{$year}";
+    }
 ?>
 
 
@@ -33,15 +48,14 @@
             </tr>
 
         <?php
-            $username = "b"; // TODO: change this to the user name stored in the cookie created during login
-            // TODO: add user authenticaion here. Maybe just check if the token containing the username also contains a role value equal to "admin"
-
-            $semester = $_GET['semester'];
 
             echo "<h1>Final Book Request Form for $semester</h1>";
         
 
-            $query = "SELECT ISBN, title, class, authors, edition, publisher, SUM(count) AS count FROM books WHERE semester = '{$semester}' GROUP BY ISBN, title, class";
+            $query = "SELECT ISBN, title, class, authors, edition, publisher, SUM(count) AS count 
+                      FROM books 
+                      WHERE semester = '{$semester}' 
+                      GROUP BY ISBN, title, class";
             
             if ($result = $conn->query($query)) {
             
