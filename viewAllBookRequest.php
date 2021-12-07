@@ -1,10 +1,12 @@
 <?php
     include_once('db_connection.php');
 
+    session_start();
+    $email =  $_SESSION["email"];
 
     if(isset($_GET['add'])) {
 
-        $email = 'b@ucf.com'; // TODO: change to get this from cookie
+        //$email = 'b@ucf.com'; // TODO: change to get this from cookie
         $semester = $_GET['semester'];
 
         $query = "INSERT INTO request (email, semester)  
@@ -21,7 +23,7 @@
 
     if(isset($_GET['delete'])) {
 
-        $email = 'b@ucf.com'; // TODO: change to get this from cookie
+       //$email = 'b@ucf.com'; // TODO: change to get this from cookie
         $semester = $_GET['semester'];
 
         $query = "DELETE FROM request WHERE email = '{$email}' AND semester = '{$semester}'";
@@ -74,7 +76,7 @@
             <th>Options</th>
         </tr>
         <?php
-             $email = 'b@ucf.com'; // TODO: change to get this from cookie
+             //$email = 'b@ucf.com'; // TODO: change to get this from cookie
 
             $query = "SELECT semester FROM request WHERE email = '{$email}'"; // TODO: CHANGE TO EMAIL
             

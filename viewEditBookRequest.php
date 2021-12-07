@@ -1,7 +1,8 @@
 <?php
     include_once('db_connection.php');
 
-    $email = "b@ucf.com"; // TODO: change to get from cookie/session
+    session_start();
+    $email =  $_SESSION["email"];
 
     if(isset($_GET['delete']))
     {

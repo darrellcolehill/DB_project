@@ -4,7 +4,7 @@
   // sql to create users table
   $sql = "CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(30),
-    lastname VARCHAR(30),
+    name VARCHAR(30),
     email VARCHAR(30),
     admin BOOLEAN,
     PRIMARY KEY (email)
