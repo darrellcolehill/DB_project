@@ -28,8 +28,9 @@ include_once('db_connection.php');
             $mail_sent = mail($to, $subject, $message, $header);
             
         }
+        echo 'Email sent successfully!';
     }
-echo 'Email sent successfully!'
+
 ?>
 
 

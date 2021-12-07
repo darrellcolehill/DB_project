@@ -26,6 +26,7 @@ session_start();
     {
         $email = $_GET['email'];
         header("Location: http://localhost/DB_project/sendIndividualReminder.php?email=$email");
+      //  echo "user search semester";
     }
 
     // check if delete is true and then reload page after deleting.
