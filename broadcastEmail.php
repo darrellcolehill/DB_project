@@ -29,7 +29,7 @@ include_once('db_connection.php');
             
         }
     }
-
+echo 'Email sent successfully!'
 ?>
 
 
