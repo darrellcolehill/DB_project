@@ -41,7 +41,7 @@ if(isset($_GET['delete']))
                 ?>
                 <table style="width:100%">
                     <tr>
-                        <th>Username</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Delete</th>
                     </tr>
@@ -49,14 +49,14 @@ if(isset($_GET['delete']))
             
                 while ($row = $result->fetch_assoc()) {
 
-                    $username = $row["username"];
+                    $name = $row["name"];
                     $email = $row["email"];
                     ?>
 
                     <tr>
-                        <td><?php echo $username?></td>
+                        <td><?php echo $name?></td>
                         <td><?php echo $email?></td>
-                        <td><?php echo "<button><a href='http://localhost/adminManage.php?delete=true&username=$username&username=$username&email=$email'>Delete</a></button>" ?></td>
+                        <td><?php echo "<button><a href='http://localhost/DB_project/adminManage.php?delete=true&email=$email'>Delete</a></button>" ?></td>
                     </tr>
                     <?php
 

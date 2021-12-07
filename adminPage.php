@@ -30,11 +30,13 @@
 </head>
 
 
-
+<h2>Administrator</h2>
     <body>
         <form method="get">
             <p>Register a new admin? <a href="http://localhost/DB_project/adminRegister.php">Register</a>.</p>
+            <p>Reset Password? <a href="http://localhost/DB_project/passwordReset.php">Reset</a>.</p>            
             <p>Manage Admin Accounts <a href="http://localhost/DB_project/adminManage.php">Manage</a>.</p>
+            <p>Manage Professor Accounts / Send Individual Email <a href="http://localhost/DB_project/professorManage.php">Manage</a>.</p>            
             <p>Broadcast Email to Professors <a href="http://localhost/DB_project/broadcastEmail.php">Manage</a>.</p>
             <p>Schedule Email <a href="http://localhost/DB_project/scheduleEmail.php">Manage</a>.</p>
             <p>Create Final List of Books for Upcoming Semester <a href="http://localhost/DB_project/finalBookRequestForm.php">Manage</a>.</p>

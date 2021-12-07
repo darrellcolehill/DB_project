@@ -75,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION['admin'] = $admin;
                             
                             $_SESSION['start'] = time();
-                            $_SESSION['expire'] = $_SESSION['start'] + (60); // change to reasonable length                     
+                            $_SESSION['expire'] = $_SESSION['start'] + (60 * 30); // change to reasonable length                     
                             
                             // Redirect user to welcome page
 
@@ -149,6 +149,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Forgot Password? <a href="tempPassword.php">Request temporary password</a>.</p>
         </form>
     </div>
 </body>

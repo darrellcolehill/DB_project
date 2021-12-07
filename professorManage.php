@@ -1,4 +1,10 @@
 
+
+
+
+
+
+
 <html>
     <body>
         <style>
@@ -6,44 +12,81 @@
             border:1px solid black;
             }
             input{
-                width: 97%;
+                width: 17%;
             }
         </style>
 <?php include_once('db_connection.php'); 
+
+
+
 session_start();
 
+    if(isset($_GET['emailSubmit']))
+    {
+        $email = $_GET['email'];
+        header("Location: 'http://localhost/DB_project/sendIndividualReminder.php?email=$email'");
+      //  echo "user search semester";
+    }
+    if(isset($_GET['delete']))
+    {
+    $delete = $_GET['delete'];
+        if($delete == 'true')
+        {
+            $email = $_GET['email']; 
+
+            // Deletes book with specified key
+            $query = "DELETE FROM users WHERE email = '{$email}'";
+            if ($result = $conn->query($query)) {
+                header("Location: http://localhost/DB_project/professorManage.php"); 
+            } 
+            else{
+                echo "ERROR: Could not able to execute $query. ";
+            }
+        }
+    }
 
 
+            
  
 
             $query = "SELECT * FROM users WHERE admin = '0'";
             
             if ($result = $conn->query($query)) {
                 ?>
-                <table style="width:100%">
+                <h2>Manage Professors</h2>
+                <h3>Send Reminder Email To New Professor</h3>
+
+        <form method="get">
+        <input type='text' name='email' value='enter email'> <input type='submit' name='emailSubmit' value="Submit">
+        <h3>Send Reminder Email To Existing Professor</h3>
+        </form>
+
+
+                <table style="width:50%">
                     <tr>
-                        <th>Username</th>
+                        <th>Name</th>
                         <th>Email</th>
-                        <th>Action</th>
+                        <th>Reminder</th>
+                        <th>Delete</th>
                     </tr>
                 <?php
             
                 while ($row = $result->fetch_assoc()) {
 
-                    $username = $row["username"];
+                    $name = $row["name"];
                     $email = $row["email"];
                     ?>
 
                     <tr>
-                        <td><?php echo $username?></td>
+                        <td><?php echo $name?></td>
                         <td><?php echo $email?></td>
-                        <td><?php echo "<button><a href='http://localhost/DB_project/sendIndividualReminder.php?email=$email'>Send Reminder Email</a></button>" ?></td> 
+                        <td><?php echo "<button><a href='http://localhost/DB_project/sendIndividualReminder.php?email=$email'>Send Reminder Email</a></button>" ?></td>
+                        <td><?php echo "<button><a href='http://localhost/DB_project/professorManage.php?delete=true&email=$email'>Delete</a></button>" ?></td> 
                         
                     </tr>                    
                     <?php
 
                 }
-            //change link above to route to email page.
 
             $result->free();
             }

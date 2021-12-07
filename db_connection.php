@@ -38,8 +38,10 @@
   //echo mysqli_affected_rows($conn);
 
   //if(mysqli_affected_rows($conn))
+
+  
   $row = $result->fetch_assoc();
-  echo $row['count'];
+  //echo $row['count'];
   if($row['count'] > 0)
   {
 
