@@ -10,7 +10,7 @@ if(isset($_GET['submit'])){
     $bookRequestDate=$_GET['bookRequestDate'];
 
     $sql = "INSERT INTO emaildates
-              VALUES ('{$semester}','{$sendEmailDate}', '{$bookRequestDate}')";
+              VALUES ('{$semester}','{$sendEmailDate}', '{$bookRequestDate}', 0)";
 
 
     if($result = $conn->query($sql))

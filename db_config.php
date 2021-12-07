@@ -6,7 +6,7 @@
     password VARCHAR(30),
     name VARCHAR(30),
     email VARCHAR(30),
-    admin BOOLEAN,
+    admin BOOLEAN DEFAULT 0,
     PRIMARY KEY (email)
     )";
 
@@ -62,7 +62,8 @@
   $sql = "CREATE TABLE IF NOT EXISTS emaildates (
     semester VARCHAR(30),
     sendEmailDate DATE,
-    bookRequestDate DATE
+    bookRequestDate DATE,
+    sentStatus BOOLEAN DEFAULT 0
   )";
     
     
