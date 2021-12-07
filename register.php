@@ -1,97 +1,86 @@
 <?php
-// Include config file
+
 require_once "db_connection.php";
  
-// Define variables and initialize with empty values
+
 $email = $name = $password = $confirm_password = "";
 $email_err = $name_err =  $password_err = $confirm_password_err = "";
  
-// Processing form data when form is submitted
+// Get an email, a name, a password and a second password for confirmation from form.
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Validate email
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter a email.";
+    // Check if email is empty.
+    if(empty($_POST["email"])){
+        $email_err = "Please enter an email.";
     }
      else{
-        // Prepare a select statement
+        // Get email from users table to check if email already exists.
         $sql = "SELECT email FROM users WHERE email = ?";
         
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
             $stmt->bind_param("s", $param_email);
             
-            // Set parameters
-            $param_email = trim($_POST["email"]);
+            $param_email = ($_POST["email"]);
             
-            // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // store result
                 $stmt->store_result();
                 
                 if($stmt->num_rows == 1){
                     $email_err = "This email is already taken.";
                 } else{
-                    $email = trim($_POST["email"]);
+                    $email = ($_POST["email"]);
                 }
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Sorry, looks like something went wrong on our end. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
 
-    // Validate Name
-
-    if(empty(trim($_POST['name']))){
+    // make sure form input isn't empty.
+    if(empty($_POST['name'])){
         $name_err = "Please enter a name.";
     }
     else{
-        $name = trim($_POST['name']);
+        $name = ($_POST['name']);
     }
     
-    // Validate password
-    if(empty(trim($_POST["password"]))){
+    if(empty($_POST["password"])){
         $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
     } else{
-        $password = trim($_POST["password"]);
+        $password = ($_POST["password"]);
     }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";     
+
+    // make sure passwords are the same.
+    if(empty($_POST["confirm_password"])){
+        $confirm_password_err = "Please enter password.";     
     } else{
-        $confirm_password = trim($_POST["confirm_password"]);
+        $confirm_password = $_POST["confirm_password"];
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
     }
     
-    // Check input errors before inserting in database
+    // If there are no errors, continue.
     if(empty($email_err) && empty($name_err) && empty($password_err) && empty($confirm_password_err)){
         
-        // Prepare an insert statement
+
         $sql = "INSERT INTO users (email, name, password) VALUES (?, ?, ?)";
          
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
+            // bind email, name, and password.
             $stmt->bind_param("sss", $param_email, $param_name, $param_password);
             
-            // Set parameters
             $param_email = $email;
             $param_password = $password;
             $param_name = $name;
             
-            // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // Redirect to login page
+
                 header("location: login.php");
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Sorry, looks like something went wrong on our end. Please try again later.";
             }
 
             // Close statement
@@ -111,14 +100,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
+        body{ font: 18px sans-serif; }
+        .wrapper{ width: 360px; padding: 20px; margin:auto }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
+        <p>Create an account by filling out the below form.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Email</label>

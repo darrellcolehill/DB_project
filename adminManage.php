@@ -1,4 +1,3 @@
-
 <html>
     <body>
         <style>
@@ -9,8 +8,16 @@
                 width: 97%;
             }
         </style>
-<?php include_once('db_connection.php'); 
+<?php 
+
+// get all admins and allow deletion of admins upon clicking a button.
+
+include_once('db_connection.php'); 
+
+
 session_start();
+
+// check if delete is true and then reload page after deleting.
 if(isset($_GET['delete']))
 {
     $delete = $_GET['delete'];
@@ -19,7 +26,6 @@ if(isset($_GET['delete']))
         $email = $_GET['email']; 
 
 
-        // Deletes book with specified key
         $query = "DELETE FROM users WHERE email = '{$email}'";
         if ($result = $conn->query($query)) {
             header("Location: http://localhost/DB_project/adminManage.php"); 
@@ -34,37 +40,38 @@ if(isset($_GET['delete']))
 
 
  
+// get all admins
+$query = "SELECT * FROM users WHERE admin = '1'";
 
-            $query = "SELECT * FROM users WHERE admin = '1'";
-            
-            if ($result = $conn->query($query)) {
-                ?>
-                <table style="width:100%">
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Delete</th>
-                    </tr>
-                <?php
-            
-                while ($row = $result->fetch_assoc()) {
+if ($result = $conn->query($query)) {
+    ?>
+    <table style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Delete</th>
+        </tr>
+    <?php
 
-                    $name = $row["name"];
-                    $email = $row["email"];
-                    ?>
+    // use url to pass value if user clicks the button.
+    while ($row = $result->fetch_assoc()) {
 
-                    <tr>
-                        <td><?php echo $name?></td>
-                        <td><?php echo $email?></td>
-                        <td><?php echo "<button><a href='http://localhost/DB_project/adminManage.php?delete=true&email=$email'>Delete</a></button>" ?></td>
-                    </tr>
-                    <?php
+        $name = $row["name"];
+        $email = $row["email"];
+        ?>
 
-                }
-            
+        <tr>
+            <td><?php echo $name?></td>
+            <td><?php echo $email?></td>
+            <td><?php echo "<button><a href='http://localhost/DB_project/adminManage.php?delete=true&email=$email'>Delete</a></button>" ?></td>
+        </tr>
+        <?php
 
-            $result->free();
-            }
+    }
+    
+
+$result->free();
+}
         ?>    
     </body>
 </html>      

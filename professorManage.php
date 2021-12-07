@@ -18,24 +18,25 @@
 <?php include_once('db_connection.php'); 
 
 
-
+// this page does two things: Send reminder emails and delete professors.
 session_start();
 
+    // Send reminder email using the URL to pass the email variable.
     if(isset($_GET['emailSubmit']))
     {
         $email = $_GET['email'];
-        header("Location: 'http://localhost/DB_project/sendIndividualReminder.php?email=$email'");
-      //  echo "user search semester";
+        header("Location: http://localhost/DB_project/sendIndividualReminder.php?email=$email");
     }
+
+    // check if delete is true and then reload page after deleting.
     if(isset($_GET['delete']))
     {
-    $delete = $_GET['delete'];
-        if($delete == 'true')
+        if($_GET['delete'] == 'true')
         {
             $email = $_GET['email']; 
 
-            // Deletes book with specified key
             $query = "DELETE FROM users WHERE email = '{$email}'";
+
             if ($result = $conn->query($query)) {
                 header("Location: http://localhost/DB_project/professorManage.php"); 
             } 
@@ -49,12 +50,12 @@ session_start();
             
  
 
-            $query = "SELECT * FROM users WHERE admin = '0'";
-            
-            if ($result = $conn->query($query)) {
-                ?>
-                <h2>Manage Professors</h2>
-                <h3>Send Reminder Email To New Professor</h3>
+    $query = "SELECT * FROM users WHERE admin = '0'";
+    
+    if ($result = $conn->query($query)) {
+        ?>
+        <h2>Manage Professors</h2>
+        <h3>Send Reminder Email To New Professor</h3>
 
         <form method="get">
         <input type='text' name='email' value='enter email'> <input type='submit' name='emailSubmit' value="Submit">

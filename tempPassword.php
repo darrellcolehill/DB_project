@@ -10,32 +10,32 @@ $email_err  = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Validate email
-    if(empty(trim($_POST["email"]))){
+    // check if email is empty
+    if(empty($_POST["email"])){
         $email_err = "Please enter an email.";
     }
     else{
-        $email = trim($_POST["email"]);
+        $email = ($_POST["email"]);
     }
+
+    // generate random 6 digit password
     $password = random_int(100000, 999999);
 
 
-    // Check input errors before updating the database
     if(empty($email_err)){
-        // Prepare an update statement
+        // prepare to update the users table with a new password
         $sql = "UPDATE users SET password = ? WHERE email = ?";
         
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
+
             $stmt->bind_param("ss", $param_password, $param_email);
             
-            // Set parameters
+
             $param_password = $password;
             $param_email = $email;
             
-            // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // Password updated successfully. Destroy the session, and redirect to login page
+                // if successful, send email with information about new password.
 
                 $to = $email;
                 $subject = 'Temporary Password';
@@ -45,19 +45,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         
                 mail($to, $subject, $message, $headers);
 
-                //session_destroy();
                 header("location: login.php");
-                //exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
     
-    // Close connection
     $conn->close();
 }
 ?>

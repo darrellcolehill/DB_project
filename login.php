@@ -1,83 +1,69 @@
 <?php
 // Initialize the session
 session_start();
- 
-// Check if the user is already logged in, if yes then redirect him to welcome page
-/*
-if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
-    exit;
-}
- */
 
-function debug_to_console($data) {
-    $output = $data;
-    if (is_array($output))
-        $output = implode(',', $output);
 
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-}
-
-// Include config file
+// connection to DB
 require_once "db_connection.php";
  
-// Define variables and initialize with empty values
+
 $email = $password = "";
 $email_err = $password_err = $login_err = "";
  
-// Processing form data when form is submitted
+// Get email and login from form
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Check if email is empty
-    if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter email.";
+    // check for empty form
+    if(empty($_POST["email"])){
+        $email_err = "Email missing.";
     } else{
-        $email = trim($_POST["email"]);
+        $email = ($_POST["email"]);
     }
     
-    // Check if password is empty
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter your password.";
+    // Check for empty form
+    if(empty($_POST["password"])){
+        $password_err = "Password missing.";
     } else{
-        $password = trim($_POST["password"]);
+        $password = ($_POST["password"]);
     }
     
-    // Validate credentials
+    // If there are no errors, check if email and password match the values from the database
     if(empty($email_err) && empty($password_err)){
-        // Prepare a select statement
+
+
         $sql = "SELECT admin, email, password FROM users WHERE email = ?";
         
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
+
+
             $stmt->bind_param("s", $param_email);
             
-            // Set parameters
             $param_email = $email;
             
-            debug_to_console($password);
-            // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // Store result
+
                 $stmt->store_result();
                 
-                // Check if email exists, if yes then verify password
+                // If the email exists, check if the password matches
                 if($stmt->num_rows == 1){                    
-                    // Bind result variables
+                    // Bind admin, email, and password
                     $stmt->bind_result($admin, $email, $real_pass);
                     if($stmt->fetch()){
                         if($password == $real_pass){
-                            // Password is correct, so start a new session
+
                             session_start();
                             
-                            // Store data in session variables
+                            // Now that we've logged in start a new session with new variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["email"] = $email;
                             $_SESSION['admin'] = $admin;
                             
+
+                            // Expire session after 30 minutes.
                             $_SESSION['start'] = time();
-                            $_SESSION['expire'] = $_SESSION['start'] + (60 * 30); // change to reasonable length                     
+                            $_SESSION['expire'] = $_SESSION['start'] + (60 * 30);              
                             
-                            // Redirect user to welcome page
+                            // Redirect user to admin page or professor page depending on admin value.
 
                             if($admin == 1)
                             {
@@ -90,24 +76,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
                             
                         } else{
-                            // Password is not valid, display a generic error message
+                            // There was some error.
                             $login_err = "Invalid email or password.";
                         }
                     }
                 } else{
-                    // email doesn't exist, display a generic error message
+                    //There was an email error.
                     $login_err = "Invalid email or password.";
                 }
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo "Sorry, looks like something went wrong on our end. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
-    
-    // Close connection
+
     $conn->close();
 }
 ?>
@@ -120,19 +104,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
+        .wrapper{ width: 360px; padding: 20px; margin:auto; }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <h2>Login</h2>
-        <p>Please fill in your credentials to login.</p>
+        <p>Please fill in the form below to log in.</p>
 
         <?php 
         if(!empty($login_err)){
             echo '<div class="alert alert-danger">' . $login_err . '</div>';
         }        
         ?>
+        
 
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
@@ -148,7 +133,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Don't have an account? <a href="register.php">Register now</a>.</p>
             <p>Forgot Password? <a href="tempPassword.php">Request temporary password</a>.</p>
         </form>
     </div>

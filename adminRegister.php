@@ -1,72 +1,73 @@
 <?php
-// Include config file
+// Get the db connection
+
 require_once "db_connection.php";
 $email = $name = $password = $confirm_password = "";
 $email_err = $name_err =  $password_err = $confirm_password_err = "";
 
+// Basically the same as register.php but generates a random 6 digit password.
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
-    // Validate email
-    if(empty(trim($_POST["email"]))){
+
+    if(empty($_POST["email"])){
         $email_err = "Please enter an email.";
     }
+
      else{
-        // Prepare a select statement
+
         $sql = "SELECT email FROM users WHERE email = ?";
         
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
+
             $stmt->bind_param("s", $param_email);
             
-            // Set parameters
-            $param_email = trim($_POST["email"]);
+            $param_email = ($_POST["email"]);
             
-            // Attempt to execute the prepared statement
             if($stmt->execute()){
-                // store result
+
                 $stmt->store_result();
-                
+                // there's already an email with this name.
                 if($stmt->num_rows == 1){
                     $email_err = "This email is already taken.";
                 } else{
-                    $email = trim($_POST["email"]);
+                    $email = ($_POST["email"]);
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
     }
 
-    // Validate Name
 
-    if(empty(trim($_POST['name']))){
+    if(empty($_POST['name'])){
         $name_err = "Please enter a name.";
     }
     else{
-        $name = trim($_POST['name']);
+        $name = ($_POST['name']);
     }
 
+    //generate a random 6 digit password
     $password = random_int(100000, 999999);
 
     if(empty($email_err) && empty($name_err)){
         
-        // Prepare an insert statement
+
         $sql = "INSERT INTO users (email, name, password, admin) VALUES (?, ?, ?, ?)";
          
         if($stmt = $conn->prepare($sql)){
-            // Bind variables to the prepared statement as parameters
+
+
             $stmt->bind_param("ssss", $param_email, $param_name, $param_password, $param_admin);
             
-            // Set parameters
+
             $param_email = $email;
             $param_password = $password;
             $param_name = $name;
             $param_admin = 1;
-            
-            // Attempt to execute the prepared statement
+
+            // send email if statement executed properly.
             if($stmt->execute()){
 
                 $to = $email;
@@ -76,20 +77,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $mail_sent = mail($to, $subject, $message, $header);
         
                 mail($to, $subject, $message, $headers);
-                // Redirect to login page
+
                 header("location: login.php");
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
-            // Close statement
             $stmt->close();
         }
 
 
     }
-    
-    // Close connection
+
     $conn->close();
 }
 ?>
@@ -99,7 +98,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <body>
     <div class="wrapper">
         <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
+        <p>Please fill this form to create an admin account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Email</label>
