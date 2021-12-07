@@ -24,7 +24,7 @@ session_start();
     if(isset($_GET['emailSubmit']))
     {
         $email = $_GET['email'];
-        header("Location: 'http://localhost/DB_project/sendIndividualReminder.php?email=$email'");
+        header("Location: http://localhost/DB_project/sendIndividualReminder.php?email=$email");
       //  echo "user search semester";
     }
     if(isset($_GET['delete']))
