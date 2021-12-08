@@ -13,9 +13,11 @@
     die("Connection failed: " . $conn->connect_error);
   }
 
-  //include_once('autoEmail.php');
 
-  
+  // Uncommenting the code below will configure
+  // the auto email function. Once db_config.php
+  // is ran, this can be uncommented.
+  /*
     
   // Reads current time
   date_default_timezone_set('America/New_York');
@@ -25,19 +27,8 @@
   //$result = $conn->query("UPDATE emaildates SET sentStatus = 1, sendEmailDate = '0000-00-00' WHERE sendEmailDate = '{$date}' AND sentStatus = 0") ;
   $result = $conn->query("SELECT COUNT(*) as count FROM emaildates WHERE sendEmailDate = '{$date}' AND sentStatus = 0") ;
 
-  /*
-  $count = 0;
-  while ($row = $result->fetch_assoc()) {
-      $sendEmailDate = $row['sendEmailDate'];
-      $bookRequestDate = $row['bookRequestDate'];
-          
-      $count += 1;   
-  }
-  */
-
-  //echo mysqli_affected_rows($conn);
-
-  //if(mysqli_affected_rows($conn))
+  
+  
 
   
   $row = $result->fetch_assoc();
@@ -62,14 +53,14 @@
           $to = $email;
           $subject = 'Book request reminder';
           $message = 'Please submit your book request by '.$bookRequestDate.'.';
-          $headers = 'From: dbprojectfall21@gmail.com' . "\r\n" .
-          'Reply-To: dbprojectfall21@gmail.com' . "\r\n" .
+          $headers = 'From: elilovera06@gmail.com' . "\r\n" .
+          'Reply-To: elilovera06@gmail.com' . "\r\n" .
           'X-Mailer: PHP/' . phpversion();
 
           mail($to, $subject, $message, $headers);
       }
 
   }
-
+*/
 
 ?>
