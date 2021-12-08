@@ -1,9 +1,9 @@
 <?php
 // Send an invitation email to  a professor
 // to request book information 
-// Admin clicks on "email" button
-// not sure how to retrieve email infor 
-// for particular professor
+// Admin clicks on "email" button from 
+// professorManage.php page
+
 include_once('db_connection.php');
 
     if (isset($_GET['email'])) {  
