@@ -1,4 +1,9 @@
 <?php
+    // Generates a list of all the requst for a given semester in the following format
+    // Professor's email, class, title, authors, edition, publisher, ISBN, and count
+    // Allows the admins to see which professor is requestion what book, for what class, and how many books
+
+
     include_once('db_connection.php');
 ?>
 
@@ -37,7 +42,8 @@
 
             echo "<h1>Final Book Request Form for $semester</h1>";
         
-
+            // Gets all books that have a corresponding semester attribute value
+            // Orders by semester for consistency and readability
             $query = "SELECT * FROM books WHERE semester = '{$semester}' ORDER BY semester";
             
             if ($result = $conn->query($query)) {

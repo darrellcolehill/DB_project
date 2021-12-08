@@ -1,14 +1,17 @@
 <?php
     include_once('db_connection.php');
 
+    // Gets the email from session data
     session_start();
     $email =  $_SESSION["email"];
 
+    // check if delete URL variable exist (user trying to delete a book)
     if(isset($_GET['delete']))
     {
         $delete = $_GET['delete'];
         if($delete == 'true')
-        {
+        {   
+            // Get the necessary information to delete a specific book. 
             $ISBN = $_GET['ISBN'];
             $semester = $_GET['semester'];
             $class = $_GET['class'];
@@ -16,6 +19,7 @@
             // Deletes book with specified key
             $query = "DELETE FROM books WHERE email = '{$email}' AND semester = '{$semester}' AND ISBN = '{$ISBN}' AND class = '{$class}'";
             if ($result = $conn->query($query)) {
+                // redirect back to the same page so the user can see the new changes
                 header("Location: http://localhost/DB_project/viewEditBookRequest.php?semester=$semester"); 
             } 
             else{
@@ -27,9 +31,10 @@
          
     }
 
-
+    // check if delete URL variable exist (user trying to add a book)
     if(isset($_GET['add'])) {
 
+        // get the necessary information to insert a book into the books table. 
         $class = $_GET['class'];
         $ISBN = $_GET['ISBN'];
         $semester = $_GET['semester'];
@@ -44,6 +49,7 @@
         VALUES ('{$email}', '{$semester}', '{$ISBN}', '{$class}', '{$title}', '{$authors}', '{$edition}', '{$publisher}', {$count})";
 
         if ($result = $conn->query($query)) {
+            // redirect back to the same page so the user can see the new changes
             header("Location: http://localhost/DB_project/viewEditBookRequest.php?semester=$semester"); 
         } 
         else{
@@ -78,7 +84,7 @@
             
             echo "<h1>{$semester}</h1>";
 
-            // TODO: change to email
+            //  query to get all the book from that the professor requested for a specific semester
             $query = "SELECT * FROM books WHERE email = '{$email}' AND semester = '{$semester}'";
             
             if ($result = $conn->query($query)) {

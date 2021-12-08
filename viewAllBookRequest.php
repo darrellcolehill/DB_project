@@ -1,18 +1,21 @@
 <?php
     include_once('db_connection.php');
 
+    // Gets the email from session data
     session_start();
     $email =  $_SESSION["email"];
 
+    // checks if the add URL variable is asserted
     if(isset($_GET['add'])) {
 
-        //$email = 'b@ucf.com'; // TODO: change to get this from cookie
         $semester = $_GET['semester'];
 
+        // Query for inserting request
         $query = "INSERT INTO request (email, semester)  
                   VALUES ('{$email}', '{$semester}')";
 
-
+        // If the request was able to be inserted, redirect to the same page
+        // so the user can see the new changes
         if ($result = $conn->query($query)) {
             header("Location: http://localhost/DB_project/viewAllBookRequest.php"); 
         } 
@@ -21,13 +24,16 @@
         }
     }
 
+    // checks if the add URL variable is asserted
     if(isset($_GET['delete'])) {
 
-       //$email = 'b@ucf.com'; // TODO: change to get this from cookie
         $semester = $_GET['semester'];
 
+        // Query for deleting a specific request. With the current user's email and desired semester being the key
         $query = "DELETE FROM request WHERE email = '{$email}' AND semester = '{$semester}'";
         if ($result = $conn->query($query)) {
+            // If the request was able to be inserted, redirect to the same page
+            // so the user can see the new changes
             header("Location: http://localhost/DB_project/viewAllBookRequest.php"); 
         } 
         else{
@@ -76,9 +82,8 @@
             <th>Options</th>
         </tr>
         <?php
-             //$email = 'b@ucf.com'; // TODO: change to get this from cookie
 
-            $query = "SELECT semester FROM request WHERE email = '{$email}'"; // TODO: CHANGE TO EMAIL
+            $query = "SELECT semester FROM request WHERE email = '{$email}'";
             
             if ($result = $conn->query($query)) {
             
@@ -95,7 +100,6 @@
                     <?php
                 }
             
-            /*freeresultset*/
             $result->free();
             }
                     ?>

@@ -10,8 +10,6 @@
     PRIMARY KEY (email)
     )";
 
-    //echo $sql;
-
     
   if ($conn->query($sql) === TRUE) {
     echo "Table users created successfully";
@@ -27,7 +25,6 @@
     PRIMARY KEY (email, semester)
   )";
     
-
   if ($conn->query($sql) === TRUE) {
     echo "Table request created successfully";
   } else {
@@ -58,7 +55,7 @@
   }
  
 
-  // sql to create books table
+  // sql to create emaildates table
   $sql = "CREATE TABLE IF NOT EXISTS emaildates (
     semester VARCHAR(30),
     sendEmailDate DATE,
